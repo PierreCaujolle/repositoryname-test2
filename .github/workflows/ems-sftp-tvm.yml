@@ -1,0 +1,23 @@
+name: ems-site-sftp
+run-name: ${{ inputs.Jobs }} by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      Jobs:
+        type: choice
+        description: 'Please select the job'
+        required: true
+        default: 'deploy.dev_to_stg'
+        options:
+        - deploy.dev_to_stg
+        - deploy.stg_to_prod
+        # - rollback.stg
+        # - rollback.prod
+
+jobs:
+  Pipeline:
+    uses: Sanofi-Shared-GitHub-Apps/web-hosting-reusable-workflows/.github/workflows/reusable-ems-sftp-tvm.yml@main
+    with:
+      JobName: ${{ inputs.Jobs }}
+    secrets: inherit
